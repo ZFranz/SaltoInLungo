@@ -1,6 +1,11 @@
 package saltoInLungo;
 
+import java.io.IOException;
+
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -11,6 +16,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 public class SaltoInLungo {
 
 	protected Shell shell;
+	int salti = 0, s1 = 0, s2 = 0, s3 = 0;
+	String nome = "";
 
 	/**
 	 * Launch the application.
@@ -64,6 +71,49 @@ public class SaltoInLungo {
 		Misura.setBounds(205, 10, 80, 21);
 
 		Button btnRegistra = new Button(shell, SWT.NONE);
+		btnRegistra.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (Nome.getText().equals("")) {
+					MessageDialog.openError(shell, "Error", "Nome vuoto.");
+				} else {
+					nome = Nome.getText();
+					if (salti == 0) {
+						if (Misura.getText().equals("")) {
+							MessageDialog.openError(shell, "Error", "Misura primo salto vuota.");
+						} else {
+							s1 = Integer.parseInt(Misura.getText());
+							Misura.setText("");
+							salti++;
+						}
+					} else if (salti == 1) {
+						if (Misura.getText().equals("")) {
+							MessageDialog.openError(shell, "Error", "Misura secondo salto vuota.");
+						} else {
+							s2 = Integer.parseInt(Misura.getText());
+							Misura.setText("");
+							salti++;
+						}
+					} else if (salti == 2) {
+						if (Misura.getText().equals("")) {
+							MessageDialog.openError(shell, "Error", "Misura terzo salto vuota.");
+						} else {
+							s3 = Integer.parseInt(Misura.getText());
+							Misura.setText("");
+							salti = 0;
+							Atleta a = new Atleta(nome, s1, s2, s3);
+							try {
+								a.Registra();
+							} catch (IOException | FileException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					}
+				}
+
+			}
+		});
 		btnRegistra.setBounds(20, 51, 75, 25);
 		btnRegistra.setText("Registra");
 	}

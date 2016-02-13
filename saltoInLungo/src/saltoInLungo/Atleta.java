@@ -64,7 +64,16 @@ public class Atleta {
 		this.s3 = s3;
 	}
 
-	public void Registra() {
+	public void Registra() throws java.io.IOException, FileException {
+		TextFile out = new TextFile("salti.txt", 'W');
+
+			String line = Integer.toString(0);
+			line += ";" + this.nome;
+			line += ";" + this.s1;
+			line += ";" + this.s2;
+			line += ";" + this.s3;
+			out.toFile(line);
+		out.closeFile();
 
 	}
 
