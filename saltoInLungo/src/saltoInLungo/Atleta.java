@@ -1,5 +1,10 @@
 package saltoInLungo;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+import org.eclipse.swt.widgets.FileDialog;
+
 public class Atleta {
 	private String nome;
 	private double s;
@@ -64,8 +69,14 @@ public class Atleta {
 		this.s3 = s3;
 	}
 
-	public void Registra() throws java.io.IOException, FileException {
-		TextFile out = new TextFile("salti.txt", 'W');
+	public void Registra(String fileScelto) throws java.io.IOException {
+		BufferedWriter scrittore = new BufferedWriter(new FileWriter(fileScelto, true));
+		scrittore.append(this.nome);
+		scrittore.append(";" + Double.toString(this.s1));
+		scrittore.append(";" + Double.toString(this.s2));
+		scrittore.append(";" + Double.toString(this.s3));
+		scrittore.close();
+		/*TextFile out = new TextFile("salti.txt", 'W');
 
 			String line = Integer.toString(0);
 			line += ";" + this.nome;
@@ -73,7 +84,7 @@ public class Atleta {
 			line += ";" + this.s2;
 			line += ";" + this.s3;
 			out.toFile(line);
-		out.closeFile();
+		out.closeFile();*/
 
 	}
 
